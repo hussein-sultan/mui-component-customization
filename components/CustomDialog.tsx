@@ -16,7 +16,7 @@ type DialogProps = {
 }
 
 export default function CustomDialog({ trigger, title, actions, children }: DialogProps) {
-  const [open, setOpen] = useState(false)
+  const [open, setOpen] = useState<boolean>(false)
 
   const handleOpen = () => setOpen(true)
   const handleClose = () => setOpen(false)
