@@ -1,35 +1,13 @@
 "use client";
 
-import { ReactNode, useEffect, useState } from "react";
 import Box from '@mui/material/Box';
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
-import { ReactElement } from "react";
+import { CustomAlertProps } from "@/types/customs";
+import { useAlert } from "@/hooks/useAlert";
 
-type AlertProps = {
-  icon?: ReactNode;
-  duration?: number
-  trigger?: ReactElement;
-  message?: string | ReactNode; // immediately show the alert when the message passes or changes
-  variant?: 'filled' | 'outlined' | 'standard';
-  severity: 'success' | 'error' | 'warning' | 'info';
-}
-
-export default function CustomAlert({ message, severity, variant, icon, duration, trigger }: AlertProps) {
-
-  const [open, setOpen] = useState<boolean>(false)
-
-  const handleClose = () => setOpen(false)
-  const handleOpen = () => setOpen(true)
-
-  // Open the alert when the message changes and there is no trigger element to open it manually
-  useEffect(() => {
-    const timer = setTimeout(() => { // we use a timeout to ensure the alert opens after the component has rendered
-      if (message && !trigger) handleOpen()
-    }, 0)
-
-    return () => clearTimeout(timer)
-  }, [message, trigger])
+export default function CustomAlert({ message, severity, variant, icon, duration, trigger }: CustomAlertProps) {
+  const { open, handleOpen, handleClose } = useAlert(message, trigger)
 
   return (
     <>
