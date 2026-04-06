@@ -21,6 +21,8 @@ export type CustomAlertProps = {
 export type CustomDialogProps = {
   title?: string,
   actions?: ReactNode,
+  open?: boolean,
+  setOpen?: (open: boolean) => void,
   children: ReactNode,
   trigger: ReactElement,
 }

@@ -8,17 +8,17 @@ import DialogContent from "@mui/material/DialogContent"
 import { CustomDialogProps } from "@/types/customs"
 import { useState } from "react"
 
-export default function CustomDialog({ trigger, title, actions, children }: CustomDialogProps) {
-  const [open, setOpen] = useState<boolean>(false)
+export default function CustomDialog({ trigger, title, setOpen, open, actions, children }: CustomDialogProps) {
+  const [inOpen, setInOpen] = useState<boolean>(false) // we will use internal state when there is no external state
 
-  const handleOpen = () => setOpen(true)
-  const handleClose = () => setOpen(false)
+  const handleOpen = () => setOpen ? setOpen(true) : setInOpen(true)
+  const handleClose = () => setOpen ? setOpen(false) : setInOpen(false)
 
   return (
     <>
-      {!open && <Box onClick={handleOpen}>{trigger}</Box>}
+      {!inOpen && <Box onClick={handleOpen}>{trigger}</Box>}
 
-      <Dialog open={open} onClose={handleClose} >
+      <Dialog open={open ?? inOpen} onClose={handleClose} >
         <DialogTitle>{title}</DialogTitle>
         <DialogContent>
           {children}
